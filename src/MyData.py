@@ -14,8 +14,8 @@ class MyData(data.Dataset):
     
     # 获取数据长度
     def __len__(self):
-        return 20
-        # return len(self.dataset)
+        # return 20
+        return len(self.dataset)
     
     # 获取数据中x,y
     def __getitem__(self, index):
@@ -32,7 +32,7 @@ class MyData(data.Dataset):
 # if __name__ == "__main__":
 #     print(np.array([2,3]))
 #     myData=MyData("img")
-#     x=myData[0][0]
-#     y=myData[0][1]
+#     x=myData[6000][0]
+#     y=myData[6000][1]
 #     print("x:",x)
 #     print("y:",y)

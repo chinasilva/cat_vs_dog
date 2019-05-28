@@ -3,6 +3,7 @@ import torch
 import torch.nn as nn
 from torch.utils import data
 import numpy as np
+from PIL import Image
 
 from MyData import MyData
 from MyNet import MyNet
@@ -13,15 +14,13 @@ class MyTrain():
         self.path=path
         self.epoch=epoch
         self.batchSize=batchSize
-        self.myNet=MyNet()
-        self.myData=MyData(self.path)
         self.myUtils=MyUtils()
         self.device=self.myUtils.deviceFun()
-        self.myNet=self.myNet.to(self.device)
+        self.myNet=MyNet().to(self.device)
+        self.myData=MyData(self.path)
         self.optimizer=torch.optim.Adam(self.myNet.parameters())
         self.lossFun=nn.MSELoss()
-        self.trainData=data.DataLoader(self.myData,batch_size=batchSize,shuffle=True)
-        # data.dataloader(self.myData)
+        self.trainData=data.DataLoader(self.myData,batch_size=self.batchSize,shuffle=True)
 
     def train(self):
         losslst=[]
@@ -29,10 +28,10 @@ class MyTrain():
             print("epoch:",i)
             for j,(x,y) in enumerate(self.trainData):
                 x=x.view(-1,100*100*3).to(self.device)
-                output=self.myNet(x)
+                output=self.myNet(x).to(self.device)
 
                 y=self.myUtils.make_one_hot(y,2).to(self.device)
-
+                # print( "y:{},output:{}".format(y,output))
                 loss=self.lossFun(y,output)
                 losslst.append(loss)
 
@@ -63,7 +62,7 @@ class MyTrain():
         # model_object.load_state_dict(torch.load(r'model/params.pth'))
 
 if __name__ == "__main__":
-    path="img"
+    path=r"img"
     epoch=100
     batchSize=600
     myTrain=MyTrain(path,epoch,batchSize)
