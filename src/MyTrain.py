@@ -4,6 +4,7 @@ import torch.nn as nn
 from torch.utils import data
 import numpy as np
 from PIL import Image
+from datetime import datetime
 
 from MyData import MyData
 from MyNet import MyNet
@@ -26,6 +27,7 @@ class MyTrain():
         losslst=[]
         for i in range(self.epoch):
             print("epoch:",i)
+            a=datetime.now() 
             for j,(x,y) in enumerate(self.trainData):
                 x=x.view(-1,100*100*3).to(self.device)
                 output=self.myNet(x).to(self.device)
@@ -46,6 +48,8 @@ class MyTrain():
                     output=torch.argmax(output,dim=1)
                     acc= np.mean(np.array(y.cpu()==output.cpu()),dtype=np.float)
                     print("acc:",acc)
+            b=datetime.now()
+            print("第{}轮次,耗时{}秒".format(i,(b-a).second))
 
 
         
