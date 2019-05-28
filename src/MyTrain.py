@@ -64,7 +64,7 @@ class MyTrain():
 
 if __name__ == "__main__":
     path="img"
-    epoch=1
+    epoch=100
     batchSize=600
     myTrain=MyTrain(path,epoch,batchSize)
     myTrain.train()
