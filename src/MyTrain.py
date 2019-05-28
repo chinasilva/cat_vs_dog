@@ -51,7 +51,7 @@ class MyTrain():
 
         
         save_model = torch.jit.trace(self.myNet,  torch.rand(self.batchSize, 3*100*100).to(self.device))
-        save_model.save("models/net.pth")
+        save_model.save(r"model/net.pth")
 
 
         # 保存加载模型所有信息
